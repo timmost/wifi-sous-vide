@@ -4,7 +4,7 @@
 #define DEBUG_START Serial.begin(115200)
 #define DEBUG_PRINT(x) Serial.println(x)
 #else
-#define DEBUG_PRINT(x) 
+#define DEBUG_PRINT(x)
 #define DEBUG_START
 #endif
 
@@ -21,27 +21,28 @@
 #include <SPIFFSReadServer.h> //http://ryandowning.net/SPIFFSReadServer
 #include <EasySSDP.h> //http://ryandowning.net/EasySSDP
 
-#define RELAY_PIN D7
+//relay parameters
+#define RELAY_PIN D1 //other pin used
 #define PULSEWIDTH 5000
-
-#define DEVICE_NAME "Sous Vide"
+#define DEVICE_NAME "sousvide" //changed not to have spaces in wifi argName
 
 //temperature sensor libraries and variables
 #include <OneWire.h>
 #include <DallasTemperature.h>
-#define TEMP_SENSOR_PIN D4
+#define TEMP_SENSOR_PIN D6 //other pin used
+
 OneWire oneWire(TEMP_SENSOR_PIN);
 DallasTemperature temperatureSensors(&oneWire);
 #define TEMP_READ_DELAY 800
 double temperature, setTemp;
 unsigned long timeAtTemp;
 bool relayControl, powerOn;
-AutoPIDRelay myPID(&temperature, &setTemp, &relayControl, 5000, .12, .0003, 0);
+AutoPIDRelay myPID(&temperature, &setTemp, &relayControl, PULSEWIDTH, .12, .0003, 0); //use of variable
 
 unsigned long lastTempUpdate;
 void updateTemperature() {
   if ((millis() - lastTempUpdate) > TEMP_READ_DELAY) {
-    temperature = temperatureSensors.getTempFByIndex(0);
+    temperature = temperatureSensors.getTempCByIndex(0); //adjusted for Celcius
     lastTempUpdate = millis();
     temperatureSensors.requestTemperatures();
   }
@@ -65,7 +66,7 @@ void setup() {
   myPID.setBangBang(4);
   myPID.setTimeStep(4000);
   pinMode(RELAY_PIN, OUTPUT);
-  digitalWrite(RELAY_PIN, HIGH);
+  digitalWrite(RELAY_PIN, LOW); //inverted for relay
 
   persWM.setApCredentials(DEVICE_NAME);
   persWM.onConnect([](){
@@ -98,7 +99,7 @@ void setup() {
     json["running"] = powerOn;
     json["upTime"] = ((timeAtTemp) ? (millis() - timeAtTemp) : 0);
     JsonArray& errors = json.createNestedArray("errors");
-    if (temperature < -190) errors.add("sensor fault");
+    if (temperature < -127) errors.add("sensor fault"); //adjusted for Celcius
     char jsonchar[200];
     json.printTo(jsonchar);
     server.send(200, "application/json", jsonchar);
@@ -125,7 +126,7 @@ void loop() {
   updateTemperature();
   if (powerOn) {
     myPID.run();
-    digitalWrite(RELAY_PIN, !relayControl);
+    digitalWrite(RELAY_PIN, relayControl); // changed - no inverted signal for relayControl
     if (myPID.atSetPoint(2)) {
       if (!timeAtTemp)
         timeAtTemp = millis();
@@ -135,7 +136,7 @@ void loop() {
   } else { //!powerOn
     timeAtTemp = 0;
     myPID.stop();
-    digitalWrite(RELAY_PIN, HIGH);
+    digitalWrite(RELAY_PIN,LOW); // set to low
   } //endif
   //Serial.println(millis());
 } //void loop

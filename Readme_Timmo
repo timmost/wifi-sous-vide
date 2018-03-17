@@ -1,0 +1,10 @@
+//open items
+// check correct files are in file store
+// temperature set to Celsius
+// record on off in chart
+// set time for heat in seconds in interface
+// have multiple temperature / time zones
+// full parameters including time
+// one sensor only
+// relay is low in normal state -> Solved
+// set temperature does not work
