@@ -1,10 +1,9 @@
-//open items
-// check correct files are in file store
-// temperature set to Celsius
-// record on off in chart
-// set time for heat in seconds in interface
-// have multiple temperature / time zones
-// full parameters including time
-// one sensor only
-// relay is low in normal state -> Solved
-// set temperature does not work
+Open items
+- Check correct files are in file store
+- Build paramter to set temperature set to Celsius / F
+- Record on off in chart
+- Set time for heat in seconds in interface
+- Have multiple temperature / time zones
+- Full parameters including time
+- One sensor only
+- Set temperature does not work
