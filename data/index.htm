@@ -61,12 +61,12 @@
 </head>
 
 <body ng-controller="mainController">
-	<h3> Sous Vide</h3>
+	<h3>Sous Vide TAS</h3>
 	<div style='text-align:left;display:inline-block;width:300px;padding:5px'>
 		Current Set Point:
-		<a class="q">{{data.setTemp}} &deg;F</a>
+		<a class="q">{{data.setTemp}} &deg;C</a>
 		<br> Current Temp:
-		<a class="q">{{data.temperature}} &deg;F</a>
+		<a class="q">{{data.temperature}} &deg;C</a>
 		<hr/> Power Level:
 		<a class="q">{{data.power*100 | number:2}}%</a>
 		<br> Running:
