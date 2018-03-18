@@ -30,10 +30,11 @@
 #include <OneWire.h>
 #include <DallasTemperature.h>
 #define TEMP_SENSOR_PIN D6 //other pin used
+#define TEMP_READ_DELAY 800
 
 OneWire oneWire(TEMP_SENSOR_PIN);
 DallasTemperature temperatureSensors(&oneWire);
-#define TEMP_READ_DELAY 800
+
 double temperature, setTemp;
 unsigned long timeAtTemp;
 bool relayControl, powerOn;
@@ -138,5 +139,5 @@ void loop() {
     myPID.stop();
     digitalWrite(RELAY_PIN,LOW); // set to low
   } //endif
-  //Serial.println(millis());
+ // Serial.println(millis());
 } //void loop
