@@ -36,7 +36,7 @@ OneWire oneWire(TEMP_SENSOR_PIN);
 DallasTemperature temperatureSensors(&oneWire);
 
 double temperature, setTemp;
-unsigned long timeAtTemp;
+unsigned long timeAtTemp,setTime;
 bool relayControl, powerOn;
 AutoPIDRelay myPID(&temperature, &setTemp, &relayControl, PULSEWIDTH, .12, .0003, 0); //use of variable
 
@@ -77,16 +77,20 @@ void setup() {
 
   //handles commands from webpage, sends live data in JSON format
   server.on("/io", []() {
-    #ifdef DEBUG
+   // #ifdef DEBUG
     for(int i = 0; i<server.args(); i++){
       DEBUG_PRINT(server.argName(i)+":"+server.arg(i));
     }
-    #endif
-    DEBUG_PRINT("server.on /io");////////////////////////
+   // #endif
+   // DEBUG_PRINT("server.on /io");////////////////////////
     if (server.hasArg("setTemp")) {
       powerOn = true;
       setTemp = server.arg("setTemp").toFloat();
       DEBUG_PRINT(setTemp);
+    } //if
+	 if (server.hasArg("setTime")) {
+      setTime = server.arg("setTime");
+      DEBUG_PRINT(setTime);
     } //if
     if (server.hasArg("powerOff")) {
       powerOn = false;
@@ -96,7 +100,8 @@ void setup() {
     JsonObject &json = jsonBuffer.createObject();
     json["temperature"] = temperature;
     json["setTemp"] = setTemp;
-    json["power"] = myPID.getPulseValue();
+    json["setTime"] = setTime;
+	json["power"] = myPID.getPulseValue();
     json["running"] = powerOn;
     json["upTime"] = ((timeAtTemp) ? (millis() - timeAtTemp) : 0);
     JsonArray& errors = json.createNestedArray("errors");
@@ -139,5 +144,5 @@ void loop() {
     myPID.stop();
     digitalWrite(RELAY_PIN,LOW); // set to low
   } //endif
- // Serial.println(millis());
+
 } //void loop
