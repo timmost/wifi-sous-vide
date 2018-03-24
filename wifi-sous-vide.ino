@@ -84,8 +84,8 @@ void setup() {
    // #endif
    DEBUG_PRINT("server.on /io");
     if (server.hasArg("setTemp")) {
-      powerOn = true;
       setTemp = server.arg("setTemp").toFloat();
+    powerOn = true;
       DEBUG_PRINT(setTemp);
     } //if
 	 if (server.hasArg("setTime")) {
@@ -93,7 +93,7 @@ void setup() {
       setTime = server.arg("setTime").toFloat();
       DEBUG_PRINT(setTime);
     } //if
-    if (server.hasArg("powerOff")) {
+       if (server.hasArg("powerOff")) {
       powerOn = false;
     } //if
 
