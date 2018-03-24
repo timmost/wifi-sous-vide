@@ -1,12 +1,12 @@
 #define DEBUG
 
-#ifdef DEBUG
+// #ifdef DEBUG
 #define DEBUG_START Serial.begin(115200)
 #define DEBUG_PRINT(x) Serial.println(x)
-#else
-#define DEBUG_PRINT(x)
-#define DEBUG_START
-#endif
+//#else
+//#define DEBUG_PRINT(x)
+//#define DEBUG_START
+//#endif
 
 
 #include <PersWiFiManager.h> //http://ryandowning.net/PersWiFiManager
@@ -37,7 +37,7 @@ DallasTemperature temperatureSensors(&oneWire);
 
 double temperature, setTemp;
 unsigned long timeAtTemp,setTime;
-bool relayControl, powerOn;
+bool relayControl, powerOn, timerUse;
 AutoPIDRelay myPID(&temperature, &setTemp, &relayControl, PULSEWIDTH, .12, .0003, 0); //use of variable
 
 unsigned long lastTempUpdate;
@@ -82,14 +82,15 @@ void setup() {
       DEBUG_PRINT(server.argName(i)+":"+server.arg(i));
     }
    // #endif
-   // DEBUG_PRINT("server.on /io");////////////////////////
+   DEBUG_PRINT("server.on /io");
     if (server.hasArg("setTemp")) {
       powerOn = true;
       setTemp = server.arg("setTemp").toFloat();
       DEBUG_PRINT(setTemp);
     } //if
 	 if (server.hasArg("setTime")) {
-      setTime = server.arg("setTime");
+      timerUse = true;
+      setTime = server.arg("setTime").toFloat();
       DEBUG_PRINT(setTime);
     } //if
     if (server.hasArg("powerOff")) {
@@ -101,9 +102,10 @@ void setup() {
     json["temperature"] = temperature;
     json["setTemp"] = setTemp;
     json["setTime"] = setTime;
-	json["power"] = myPID.getPulseValue();
+	  json["power"] = myPID.getPulseValue();
     json["running"] = powerOn;
     json["upTime"] = ((timeAtTemp) ? (millis() - timeAtTemp) : 0);
+    json["leftTime"] = setTime;
     JsonArray& errors = json.createNestedArray("errors");
     if (temperature < -127) errors.add("sensor fault"); //adjusted for Celcius
     char jsonchar[200];
@@ -130,7 +132,7 @@ void loop() {
   dnsServer.processNextRequest();
   server.handleClient();
   updateTemperature();
-  if (powerOn) {
+  if (powerOn && timerUse) {
     myPID.run();
     digitalWrite(RELAY_PIN, relayControl); // changed - no inverted signal for relayControl
     if (myPID.atSetPoint(2)) {

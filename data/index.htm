@@ -73,6 +73,8 @@
 		<a class="q">{{data.running ? "On" : "Off"}}</a>
 		<br> Time @ Temp:
 		<a class="q">{{data.upTime | date:'HH:mm:ss':'UTC'}}</a>
+		<br> Time remaining:
+		<a class="q">{{data.leftTime | date:'HH:mm:ss':'UTC'}}</a>
 		<br>
 		<span class="smalltext error" ng-show="data.errors.length">Errors: {{data.errors.join(", ")}}</span>
 		<br>
@@ -82,7 +84,7 @@
 		<br>
 			<form style="text-align:center" ng-submit="submit(formData)">
 				<input type="number" placeholder="set temperature" id="st" ng-model="formData.setTemp" step=".1" min="0" max="400" />
-				<input type="number" placeholder="set time" id="st" ng-model="formData.setTime" step=".1" min="0" max="10000" />
+				<input type="number" placeholder="set time" id="st" ng-model="formData.setTime" step="1" min="0" max="10000" />
 				<button type="submit">Set</button>
 				<button type="button" ng-click="submit({powerOff})">Off</button>
 			</form>
