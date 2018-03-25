@@ -5,7 +5,7 @@ sousVide.controller( 'mainController', function($scope, $http, $interval,$httpPa
 		$scope.tRefresh++;
 	}, 1000);
 
-	console.log("test Timmo2")
+	console.log("test Timmo4")
 
 	$scope.submit = function(data){
 		$scope.tx = true;
