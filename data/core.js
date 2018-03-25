@@ -28,7 +28,7 @@ sousVide.controller( 'mainController', function($scope, $http, $interval,$httpPa
 	};
 
 	$scope.submit({});
-	document.getElementById('powerOff').focus();
+	document.getElementById('st').focus();
 
 	$interval(function(){
 		if(!$scope.tx) {
