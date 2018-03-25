@@ -85,7 +85,7 @@ void setup() {
    DEBUG_PRINT("server.on /io vor Schleife");
    DEBUG_PRINT(server.args());
    for(int i = 0; i<server.args(); i++){
-     DEBUG_PRINT(server.argName(i)+":"+server.arg(i));
+     DEBUG_PRINT(server.argName(i)+":"+server.arg(i));}
   if (server.hasArg("setTemp")) {
       setTemp = server.arg("setTemp").toFloat();
       powerOn = true;

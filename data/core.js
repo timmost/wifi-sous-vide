@@ -5,7 +5,7 @@ sousVide.controller( 'mainController', function($scope, $http, $interval,$httpPa
 		$scope.tRefresh++;
 	}, 1000);
 
-	console.log("test")
+	console.log("test Timmo")
 
 	$scope.submit = function(data){
 		$scope.tx = true;
@@ -34,6 +34,6 @@ sousVide.controller( 'mainController', function($scope, $http, $interval,$httpPa
 		if(!$scope.tx) {
 			$scope.submit({});
 		}
-	}, 5000);
-	
+	}, 2000);
+
 }); //sousvide

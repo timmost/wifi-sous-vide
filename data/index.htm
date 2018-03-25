@@ -61,7 +61,7 @@
 </head>
 
 <body ng-controller="mainController">
-	<h3>Sous Vide TAS</h3>
+	<h3>Sous Vide TAS1</h3>
 	<div style='text-align:left;display:inline-block;width:300px;padding:5px'>
 		Current Set Point:
 		<a class="q">{{data.setTemp}} &deg;C</a>
@@ -86,7 +86,7 @@
 				<input type="number" placeholder="set temperature" id="st" ng-model="formData.setTemp" step=".1" min="0" max="400" />
 				<input type="number" placeholder="set time" id="st" ng-model="formData.setTime" step="1" min="0" max="10000" />
 				<button type="submit">Set</button>
-				<button type="button" ng-click="submit("powerOff")">Off</button>
+				<button type="button" ng-click="submit({powerOff})">Off</button>
 			</form>
 		<br>
 		<span id="nav">
