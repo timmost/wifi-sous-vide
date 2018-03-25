@@ -82,19 +82,28 @@ void setup() {
       DEBUG_PRINT(server.argName(i)+":"+server.arg(i));
     }
    // #endif
-   DEBUG_PRINT("server.on /io");
-    if (server.hasArg("setTemp")) {
+   DEBUG_PRINT("server.on /io vor Schleife");
+   DEBUG_PRINT(server.args());
+   for(int i = 0; i<server.args(); i++){
+     DEBUG_PRINT(server.argName(i)+":"+server.arg(i));
+  if (server.hasArg("setTemp")) {
       setTemp = server.arg("setTemp").toFloat();
-    powerOn = true;
+      powerOn = true;
+      DEBUG_PRINT("setTemp Routine");
+      DEBUG_PRINT(powerOn);
       DEBUG_PRINT(setTemp);
     } //if
 	 if (server.hasArg("setTime")) {
       timerUse = true;
       setTime = server.arg("setTime").toFloat();
+      DEBUG_PRINT("setTime Routine");
+      DEBUG_PRINT(timerUse);
       DEBUG_PRINT(setTime);
     } //if
-       if (server.hasArg("powerOff")) {
+    if (server.hasArg("powerOff")) {
       powerOn = false;
+      DEBUG_PRINT(powerOn);
+      DEBUG_PRINT("powerOff Routine");
     } //if
 
     StaticJsonBuffer<200> jsonBuffer;
