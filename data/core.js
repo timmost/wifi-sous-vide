@@ -5,7 +5,7 @@ sousVide.controller( 'mainController', function($scope, $http, $interval,$httpPa
 		$scope.tRefresh++;
 	}, 1000);
 
-	console.log("test Timmo")
+	console.log("test Timmo2")
 
 	$scope.submit = function(data){
 		$scope.tx = true;
@@ -28,7 +28,7 @@ sousVide.controller( 'mainController', function($scope, $http, $interval,$httpPa
 	};
 
 	$scope.submit({});
-	document.getElementById('st').focus();
+	document.getElementById('powerOff').focus();
 
 	$interval(function(){
 		if(!$scope.tx) {
