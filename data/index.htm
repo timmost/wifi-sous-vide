@@ -8,55 +8,14 @@
 	<script src="core.js"></script>
 
 	<style>
-		input {
-			padding: 5px;
-			font-size: 1em;
-			width: 95%;
-			filter:invert(100%)
-		}
-
-		body {
-			text-align: center;
-			font-family: verdana;
-			font-size:1.1em;
-			background-color: black;
-			color:white;
-		}
-
-		a {
-			color:#1fa3ec;
-		}
-
-		button {
-			border: 0;
-			border-radius: 0.3rem;
-			background-color: #1fa3ec;
-			color: #fff;
-			line-height: 2.4rem;
-			font-size: 1.2rem;
-			width: 40%;
-			display: inline-block;
-			margin: 2%;
-		}
-
-		.q {
-			float: right;
-			text-align: right;
-		}
-
-		.smalltext {
-			font-size: 75%;
-			font-weight: lighter;
-		}
-
-		.error {
-			color: red;
-		}
-
-		#nav {
-			display:block;
-			text-align: center;
-		}
+		input {padding: 5px;font-size: 1em; width: 95%; filter:invert(100%)}
+		body {text-align: center; font-family: verdana;	font-size:1.1em; background-color: black;color:white; }
+		a {color:#1fa3ec;}
+		button {border: 0;border-radius: 0.3rem; background-color: #1fa3ec; color: #fff; line-height: 2.4rem; font-size: 1.2rem; width: 40%; display: inline-block; margin: 2%;	}
+		.q {float: right;text-align: right;}
+		.smalltext { font-size: 75%;font-weight: lighter;}
+		.error {color: red;}
+		#nav {display:block;text-align: center;}
 	</style>
 </head>
 
@@ -75,7 +34,7 @@
 		<a class="q">{{data.upTime | date:'HH:mm:ss':'UTC'}}</a>
 		<br> Time remaining:
 		<a class="q">{{data.leftTime | date:'HH:mm:ss':'UTC'}}</a>
-		<br>
+		<br>	
 		<span class="smalltext error" ng-show="data.errors.length">Errors: {{data.errors.join(", ")}}</span>
 		<br>
 		<span class="smalltext" style="{{((tRefresh>10&&tRefresh%2)?'color:red':'')}}" >Last updated {{tRefresh}} seconds ago.<br>

@@ -5,14 +5,14 @@ sousVide.controller( 'mainController', function($scope, $http, $interval,$httpPa
 		$scope.tRefresh++;
 	}, 1000);
 
-	console.log("test Timmo4")
+	console.log("test Timmo5")
 
 	$scope.submit = function(data){
 		$scope.tx = true;
 		console.log(data);
 		console.log($httpParamSerializerJQLike(data));
 		console.log(new FormData(data));
-		// $http.post('/io', $httpParamSerializerJQLike(data)).then(function(res) {
+	//		$http.post('/io', $httpParamSerializerJQLike(data)).then(function(res) {
 		$http({
 			url:'/io',
 			method:'GET',
@@ -20,7 +20,7 @@ sousVide.controller( 'mainController', function($scope, $http, $interval,$httpPa
 			paramSerializer:'$httpParamSerializerJQLike'
 		}).then(function(res) {
 			$scope.data = res.data;
-			//$scope.upTimeDisp = (new Date($scope.data.upTime)).toISOString().substr(11, 8);
+			$scope.upTimeDisp = (new Date($scope.data.upTime)).toISOString().substr(11, 8);
 			$scope.tRefresh = 0;
 		}).finally(function(){
 			$scope.tx = false;
